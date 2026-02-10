@@ -1,0 +1,15 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_CRUD_SERVICE}}.{{ENTITY_NAME}}Service;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/{{ENTITY_NAME_PLURAL}}")
+@RequiredArgsConstructor
+public class {{ENTITY_NAME}}Controller {
+
+    private final {{ENTITY_NAME}}Service service;
+
+    // TODO: Add CRUD endpoints
+}

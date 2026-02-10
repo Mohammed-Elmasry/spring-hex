@@ -1,0 +1,40 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_CQRS}}.QueryHandler;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.GenericTypeResolver;
+import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import java.util.Map;
+
+@Component
+@RequiredArgsConstructor
+public class SimpleQueryBus implements QueryBus {
+
+    private final ApplicationContext applicationContext;
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <R> R dispatch(Object query) {
+        Class<?> queryType = query.getClass();
+        QueryHandler<Object, R> handler = findHandler(queryType);
+        return handler.handle(query);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <R> QueryHandler<Object, R> findHandler(Class<?> queryType) {
+        Map<String, QueryHandler> handlers = applicationContext.getBeansOfType(QueryHandler.class);
+
+        for (QueryHandler<?, ?> handler : handlers.values()) {
+            Class<?>[] generics = GenericTypeResolver.resolveTypeArguments(
+                handler.getClass(), QueryHandler.class
+            );
+
+            if (generics != null && generics[0].equals(queryType)) {
+                return (QueryHandler<Object, R>) handler;
+            }
+        }
+
+        throw new IllegalStateException("No handler found for query: " + queryType.getName());
+    }
+}

@@ -1,0 +1,29 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_MODEL}}.{{ENTITY_NAME}};
+import org.springframework.stereotype.Component;
+
+import java.util.function.Function;
+
+@Component
+public class {{ENTITY_NAME}}Mapper {
+    
+    public final Function<{{ENTITY_NAME}}, {{ENTITY_NAME}}JpaEntity> toJpaEntity = this::toJpaEntity;
+    public final Function<{{ENTITY_NAME}}JpaEntity, {{ENTITY_NAME}}> toDomain = this::toDomain;
+    
+    public {{ENTITY_NAME}}JpaEntity toJpaEntity({{ENTITY_NAME}} domain) {
+        if (domain == null) return null;
+        
+        {{ENTITY_NAME}}JpaEntity entity = new {{ENTITY_NAME}}JpaEntity();
+        // TODO: Map domain fields to JPA entity
+        return entity;
+    }
+    
+    public {{ENTITY_NAME}} toDomain({{ENTITY_NAME}}JpaEntity entity) {
+        if (entity == null) return null;
+        
+        return {{ENTITY_NAME}}.builder()
+            // TODO: Map JPA entity fields to domain
+            .build();
+    }
+}

@@ -1,0 +1,15 @@
+package {{PACKAGE}};
+
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Data
+@Document(collection = "{{AGGREGATE}}")
+public class {{ENTITY_NAME}}MongoDocument {
+
+    @Id
+    private String id;
+
+    // TODO: Add document fields
+}

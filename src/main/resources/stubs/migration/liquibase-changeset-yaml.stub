@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: "{{CHANGESET_ID}}"
+      author: "spring-hex-cli"
+      changes:
+        # Write your changes here
+        # Example:
+        # - createTable:
+        #     tableName: users
+        #     columns:
+        #       - column:
+        #           name: id
+        #           type: BIGINT
+        #           autoIncrement: true
+        #           constraints:
+        #             primaryKey: true
+        #             nullable: false
+        #       - column:
+        #           name: name
+        #           type: VARCHAR(255)
+        #           constraints:
+        #             nullable: false
+        - tagDatabase:
+            tag: "{{CHANGESET_ID}}"
+      rollback:
+        # Write rollback changes here
+        # Example:
+        # - dropTable:
+        #     tableName: users
+        - tagDatabase:
+            tag: "rollback-{{CHANGESET_ID}}"

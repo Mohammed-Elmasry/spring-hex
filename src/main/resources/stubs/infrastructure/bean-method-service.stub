@@ -1,0 +1,5 @@
+
+    @Bean
+    public {{AGGREGATE_CAPITALIZED}}Service {{SERVICE_BEAN}}({{AGGREGATE_CAPITALIZED}}Repository repository) {
+        return new {{AGGREGATE_CAPITALIZED}}Service(repository);
+    }

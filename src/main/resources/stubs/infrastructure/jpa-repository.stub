@@ -1,0 +1,33 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_MODEL}}.{{ENTITY_NAME}};
+import {{PACKAGE_MODEL}}.{{ENTITY_NAME}}Id;
+import {{PACKAGE_PORT_OUT}}.{{AGGREGATE_CAPITALIZED}}Repository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+import java.util.Optional;
+
+@Repository
+@RequiredArgsConstructor
+public class Jpa{{AGGREGATE_CAPITALIZED}}Repository implements {{AGGREGATE_CAPITALIZED}}Repository {
+    
+    private final {{AGGREGATE_CAPITALIZED}}JpaRepository jpaRepository;
+    
+    @Override
+    public {{ENTITY_NAME}} save({{ENTITY_NAME}} entity) {
+        // TODO: Map domain entity to JPA entity and save
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+    
+    @Override
+    public Optional<{{ENTITY_NAME}}> findById({{ENTITY_NAME}}Id id) {
+        // TODO: Find JPA entity and map to domain entity
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+    
+    @Override
+    public void deleteById({{ENTITY_NAME}}Id id) {
+        // TODO: Delete JPA entity
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+}

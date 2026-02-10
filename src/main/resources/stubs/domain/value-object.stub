@@ -1,0 +1,10 @@
+package {{PACKAGE}};
+
+import java.util.Objects;
+
+public record {{VALUE_OBJECT_NAME}}(String value) {
+
+    public {{VALUE_OBJECT_NAME}} {
+        Objects.requireNonNull(value, "{{VALUE_OBJECT_NAME}} value cannot be null");
+    }
+}

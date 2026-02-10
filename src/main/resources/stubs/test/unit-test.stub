@@ -1,0 +1,18 @@
+package {{TEST_PACKAGE}};
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+@ExtendWith(MockitoExtension.class)
+class {{TEST_NAME}} {
+
+    // TODO: Add @Mock dependencies and @InjectMocks target
+
+    @Test
+    void should_pass() {
+        // TODO: Write unit test
+    }
+}

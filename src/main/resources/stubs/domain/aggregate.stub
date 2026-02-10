@@ -1,0 +1,24 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_DOMAIN_ROOT}}.AggregateRoot;
+
+public class {{AGGREGATE_CAPITALIZED}} extends AggregateRoot {
+
+    private {{AGGREGATE_CAPITALIZED}}Id id;
+
+    protected {{AGGREGATE_CAPITALIZED}}() {
+    }
+
+    public static {{AGGREGATE_CAPITALIZED}} create() {
+        {{AGGREGATE_CAPITALIZED}} aggregate = new {{AGGREGATE_CAPITALIZED}}();
+        // TODO: Initialize fields and register creation event
+        // aggregate.registerEvent(new {{AGGREGATE_CAPITALIZED}}CreatedEvent(...));
+        return aggregate;
+    }
+
+    public {{AGGREGATE_CAPITALIZED}}Id getId() {
+        return id;
+    }
+
+    // TODO: Add aggregate behavior methods
+}

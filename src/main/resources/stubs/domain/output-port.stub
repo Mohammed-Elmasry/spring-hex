@@ -1,0 +1,6 @@
+package {{PACKAGE}};
+
+public interface {{PORT_NAME}} {
+
+    // TODO: Define output port methods
+}

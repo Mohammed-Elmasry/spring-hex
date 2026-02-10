@@ -1,0 +1,10 @@
+package {{PACKAGE}};
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface {{AGGREGATE_CAPITALIZED}}MongoRepository extends MongoRepository<{{ENTITY_NAME}}MongoDocument, String> {
+
+    // Add custom query methods here
+}

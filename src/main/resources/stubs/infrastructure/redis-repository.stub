@@ -1,0 +1,10 @@
+package {{PACKAGE}};
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface {{AGGREGATE_CAPITALIZED}}RedisRepository extends CrudRepository<{{ENTITY_NAME}}RedisEntity, String> {
+
+    // Add custom query methods here
+}

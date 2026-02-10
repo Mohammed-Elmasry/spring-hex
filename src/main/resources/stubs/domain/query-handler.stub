@@ -1,0 +1,17 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_CQRS}}.QueryHandler;
+import {{PACKAGE_PORT_OUT}}.{{AGGREGATE_CAPITALIZED}}Repository;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class {{QUERY_NAME}}Handler implements QueryHandler<{{QUERY_NAME}}, {{RETURN_TYPE}}> {
+
+    private final {{AGGREGATE_CAPITALIZED}}Repository repository;
+
+    @Override
+    public {{RETURN_TYPE}} handle({{QUERY_NAME}} query) {
+        // TODO: Implement query handling logic
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+}

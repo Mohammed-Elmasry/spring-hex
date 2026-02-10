@@ -1,0 +1,11 @@
+package {{PACKAGE}};
+
+import lombok.Value;
+import lombok.Builder;
+
+@Value
+@Builder
+public class {{RESPONSE_NAME}} {
+    
+    // TODO: Add response fields
+}

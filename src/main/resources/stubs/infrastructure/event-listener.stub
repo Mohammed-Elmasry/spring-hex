@@ -1,0 +1,20 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_EVENT}}.{{EVENT_NAME}};
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
+
+@Component
+public class {{EVENT_NAME}}Listener {
+
+    private static final Logger log = LoggerFactory.getLogger({{EVENT_NAME}}Listener.class);
+
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    public void handle({{EVENT_NAME}} event) {
+        log.info("Handling {}: {}", event.getClass().getSimpleName(), event);
+        // TODO: Implement event handling logic
+    }
+}

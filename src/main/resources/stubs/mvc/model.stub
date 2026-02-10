@@ -1,0 +1,17 @@
+package {{PACKAGE}};
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class {{ENTITY_NAME}} {
+
+    private Long id;
+
+    // TODO: Add domain fields
+}

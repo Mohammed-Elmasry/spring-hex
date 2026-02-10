@@ -1,0 +1,6 @@
+package {{PACKAGE}};
+
+public interface QueryBus {
+    
+    <R> R dispatch(Object query);
+}

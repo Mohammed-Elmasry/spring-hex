@@ -1,0 +1,19 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_CRUD_MAPPER}}.{{ENTITY_NAME}}Mapper;
+import {{PACKAGE_CRUD_MODEL}}.{{ENTITY_NAME}};
+import {{PACKAGE_CRUD_REPOSITORY}}.{{ENTITY_NAME}}Repository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class {{ENTITY_NAME}}Service {
+
+    private final {{ENTITY_NAME}}Repository repository;
+    private final {{ENTITY_NAME}}Mapper mapper;
+
+    // TODO: Add service methods
+}

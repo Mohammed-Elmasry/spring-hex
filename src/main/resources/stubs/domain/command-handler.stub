@@ -1,0 +1,17 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_CQRS}}.CommandHandler;
+import {{PACKAGE_PORT_OUT}}.{{AGGREGATE_CAPITALIZED}}Repository;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class {{COMMAND_NAME}}Handler implements CommandHandler<{{COMMAND_NAME}}, Void> {
+
+    private final {{AGGREGATE_CAPITALIZED}}Repository repository;
+
+    @Override
+    public Void handle({{COMMAND_NAME}} command) {
+        // TODO: Implement command handling logic
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+}

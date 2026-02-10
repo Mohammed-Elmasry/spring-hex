@@ -1,0 +1,15 @@
+package {{PACKAGE}};
+
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+
+@Data
+@RedisHash("{{AGGREGATE}}")
+public class {{ENTITY_NAME}}RedisEntity {
+
+    @Id
+    private String id;
+
+    // TODO: Add Redis hash fields
+}

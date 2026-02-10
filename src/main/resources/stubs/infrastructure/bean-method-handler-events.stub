@@ -1,0 +1,5 @@
+
+    @Bean
+    public {{HANDLER_CLASS}} {{HANDLER_BEAN}}({{AGGREGATE_CAPITALIZED}}Repository repository, ApplicationEventPublisher eventPublisher) {
+        return new {{HANDLER_CLASS}}(repository, eventPublisher);
+    }

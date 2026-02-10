@@ -1,0 +1,35 @@
+base-package: {{BASE_PACKAGE}}
+
+# Hexagonal Architecture path patterns
+# Uncomment and customize to override defaults.
+# Available variables: {aggregate}, {category}, {name}
+#
+# paths:
+#   model: domain.{aggregate}.model
+#   command: domain.{aggregate}.command
+#   query: domain.{aggregate}.query
+#   event: domain.{aggregate}.event
+#   event-listener: infrastructure.event.{aggregate}
+#   dto: domain.{aggregate}.dto
+#   port-in: domain.{aggregate}.port.in
+#   port-out: domain.{aggregate}.port.out
+#   persistence: infrastructure.persistence.{aggregate}
+#   controller: infrastructure.web.{aggregate}
+#   adapter: infrastructure.{category}.{aggregate}
+#   config: infrastructure.config
+#   mediator: infrastructure.mediator
+#   cqrs: domain.cqrs
+#   domain-root: domain
+#   service: domain.{aggregate}.service
+
+# CRUD (MVC) path patterns
+# Uncomment and customize to override defaults.
+# Available variables: {name}
+#
+# crud:
+#   model: "{name}.model"
+#   entity: "{name}.entity"
+#   repository: "{name}.repository"
+#   mapper: "{name}.mapper"
+#   service: "{name}.service"
+#   controller: "{name}.web"

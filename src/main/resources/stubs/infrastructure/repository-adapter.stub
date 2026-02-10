@@ -1,0 +1,48 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_MODEL}}.{{ENTITY_NAME}};
+import {{PACKAGE_MODEL}}.{{ENTITY_NAME}}Id;
+import {{PACKAGE_PORT_OUT}}.{{AGGREGATE_CAPITALIZED}}Repository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
+
+@Component
+@RequiredArgsConstructor
+public class {{AGGREGATE_CAPITALIZED}}RepositoryAdapter implements {{AGGREGATE_CAPITALIZED}}Repository {
+    
+    private final {{AGGREGATE_CAPITALIZED}}JpaRepository jpaRepository;
+    private final {{ENTITY_NAME}}Mapper mapper;
+    
+    @Override
+    public {{ENTITY_NAME}} save({{ENTITY_NAME}} entity) {
+        {{ENTITY_NAME}}JpaEntity jpaEntity = mapper.toJpaEntity(entity);
+        {{ENTITY_NAME}}JpaEntity saved = jpaRepository.save(jpaEntity);
+        return mapper.toDomain(saved);
+    }
+    
+    @Override
+    public Optional<{{ENTITY_NAME}}> findById({{ENTITY_NAME}}Id id) {
+        return jpaRepository.findById(id.getValue())
+            .map(mapper::toDomain);
+    }
+    
+    @Override
+    public List<{{ENTITY_NAME}}> findAll() {
+        return jpaRepository.findAll().stream()
+            .map(mapper::toDomain)
+            .toList();
+    }
+    
+    @Override
+    public void deleteById({{ENTITY_NAME}}Id id) {
+        jpaRepository.deleteById(id.getValue());
+    }
+    
+    @Override
+    public boolean existsById({{ENTITY_NAME}}Id id) {
+        return jpaRepository.existsById(id.getValue());
+    }
+}

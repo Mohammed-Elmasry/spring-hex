@@ -1,0 +1,12 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_PORT_OUT}}.{{AGGREGATE_CAPITALIZED}}Repository;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class {{AGGREGATE_CAPITALIZED}}Service {
+
+    private final {{AGGREGATE_CAPITALIZED}}Repository repository;
+
+    // TODO: Add domain service methods
+}

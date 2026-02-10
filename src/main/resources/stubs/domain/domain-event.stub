@@ -1,0 +1,15 @@
+package {{PACKAGE}};
+
+import java.time.Instant;
+
+public record {{EVENT_NAME}}(
+    String aggregateId,
+    Instant occurredAt
+) {
+
+    public {{EVENT_NAME}}(String aggregateId) {
+        this(aggregateId, Instant.now());
+    }
+
+    // TODO: Add event-specific fields
+}

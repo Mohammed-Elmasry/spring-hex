@@ -1,0 +1,11 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_CRUD_ENTITY}}.{{ENTITY_NAME}}Entity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface {{ENTITY_NAME}}Repository extends JpaRepository<{{ENTITY_NAME}}Entity, Long> {
+
+    // TODO: Add custom query methods
+}

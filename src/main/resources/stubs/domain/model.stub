@@ -1,0 +1,13 @@
+package {{PACKAGE}};
+
+import lombok.Data;
+import lombok.Builder;
+
+@Data
+@Builder
+public class {{ENTITY_NAME}} {
+
+    private {{ENTITY_NAME}}Id id;
+
+    // TODO: Add model fields
+}

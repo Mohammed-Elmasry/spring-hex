@@ -1,0 +1,19 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_MODEL}}.{{ENTITY_NAME}};
+import {{PACKAGE_MODEL}}.{{ENTITY_NAME}}Id;
+import java.util.Optional;
+import java.util.List;
+
+public interface {{AGGREGATE_CAPITALIZED}}Repository {
+    
+    {{ENTITY_NAME}} save({{ENTITY_NAME}} entity);
+    
+    Optional<{{ENTITY_NAME}}> findById({{ENTITY_NAME}}Id id);
+    
+    List<{{ENTITY_NAME}}> findAll();
+    
+    void deleteById({{ENTITY_NAME}}Id id);
+    
+    boolean existsById({{ENTITY_NAME}}Id id);
+}

@@ -1,0 +1,7 @@
+-- Revert migration: {{ORIGINAL_MIGRATION}}
+-- Original file: {{ORIGINAL_FILE}}
+-- Tool: Flyway (forward-only revert — Community Edition has no undo)
+
+-- Write the SQL to undo the original migration here
+-- Example: if original created a table, drop it:
+-- DROP TABLE IF EXISTS users;

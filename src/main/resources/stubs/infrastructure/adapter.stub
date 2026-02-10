@@ -1,0 +1,12 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_PORT_OUT}}.{{PORT_NAME}};
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+public class {{ADAPTER_NAME}} implements {{PORT_NAME}} {
+
+    // TODO: Implement port methods
+}

@@ -1,0 +1,6 @@
+package {{PACKAGE}};
+
+public interface CommandBus {
+    
+    <R> R dispatch(Object command);
+}

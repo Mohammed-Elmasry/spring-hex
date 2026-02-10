@@ -1,0 +1,18 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_MEDIATOR}}.CommandBus;
+import {{PACKAGE_MEDIATOR}}.QueryBus;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/{{AGGREGATE_PLURAL}}")
+@RequiredArgsConstructor
+public class {{AGGREGATE_CAPITALIZED}}Controller {
+    
+    private final CommandBus commandBus;
+    private final QueryBus queryBus;
+    
+    // TODO: Add controller endpoints
+}

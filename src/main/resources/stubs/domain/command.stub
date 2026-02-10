@@ -1,0 +1,8 @@
+package {{PACKAGE}};
+
+import lombok.Value;
+
+@Value
+public class {{COMMAND_NAME}} {
+    // TODO: Add command fields
+}

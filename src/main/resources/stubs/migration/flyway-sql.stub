@@ -1,0 +1,12 @@
+-- Migration: {{MIGRATION_NAME}}
+-- Created at: {{TIMESTAMP}}
+-- Tool: Flyway
+
+-- Write your SQL migration here
+-- Example:
+-- CREATE TABLE users (
+--     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+--     name VARCHAR(255) NOT NULL,
+--     email VARCHAR(255) NOT NULL UNIQUE,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );

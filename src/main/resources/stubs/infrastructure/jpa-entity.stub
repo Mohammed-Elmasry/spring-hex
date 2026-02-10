@@ -1,0 +1,16 @@
+package {{PACKAGE}};
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Entity
+@Table(name = "{{TABLE_NAME}}")
+@Data
+public class {{ENTITY_NAME}}JpaEntity {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    // TODO: Add JPA entity fields
+}

@@ -1,0 +1,8 @@
+package {{PACKAGE}};
+
+import lombok.Value;
+
+@Value
+public class {{QUERY_NAME}} {
+    // TODO: Add query parameters
+}

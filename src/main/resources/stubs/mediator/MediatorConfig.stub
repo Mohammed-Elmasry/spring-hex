@@ -1,0 +1,9 @@
+package {{PACKAGE}};
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan(basePackages = "{{PACKAGE_MEDIATOR}}")
+public class MediatorConfig {
+}

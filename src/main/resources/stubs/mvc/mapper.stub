@@ -1,0 +1,25 @@
+package {{PACKAGE}};
+
+import {{PACKAGE_CRUD_ENTITY}}.{{ENTITY_NAME}}Entity;
+import {{PACKAGE_CRUD_MODEL}}.{{ENTITY_NAME}};
+import org.springframework.stereotype.Component;
+
+@Component
+public class {{ENTITY_NAME}}Mapper {
+
+    public {{ENTITY_NAME}}Entity toEntity({{ENTITY_NAME}} domain) {
+        if (domain == null) return null;
+
+        {{ENTITY_NAME}}Entity entity = new {{ENTITY_NAME}}Entity();
+        // TODO: Map domain fields to entity
+        return entity;
+    }
+
+    public {{ENTITY_NAME}} toDomain({{ENTITY_NAME}}Entity entity) {
+        if (entity == null) return null;
+
+        return {{ENTITY_NAME}}.builder()
+            // TODO: Map entity fields to domain
+            .build();
+    }
+}

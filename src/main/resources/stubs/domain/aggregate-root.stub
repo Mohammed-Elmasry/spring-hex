@@ -1,0 +1,22 @@
+package {{PACKAGE}};
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public abstract class AggregateRoot {
+
+    private final transient List<Object> domainEvents = new ArrayList<>();
+
+    protected void registerEvent(Object event) {
+        this.domainEvents.add(event);
+    }
+
+    public List<Object> getDomainEvents() {
+        return Collections.unmodifiableList(domainEvents);
+    }
+
+    public void clearDomainEvents() {
+        this.domainEvents.clear();
+    }
+}

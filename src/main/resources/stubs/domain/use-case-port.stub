@@ -1,0 +1,6 @@
+package {{PACKAGE}};
+
+public interface {{USE_CASE_NAME}} {
+    
+    {{RETURN_TYPE}} execute({{PARAMETER_TYPE}} request);
+}

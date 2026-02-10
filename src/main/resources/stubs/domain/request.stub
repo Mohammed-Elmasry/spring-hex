@@ -1,0 +1,9 @@
+package {{PACKAGE}};
+
+import lombok.Value;
+
+@Value
+public class {{REQUEST_NAME}} {
+    
+    // TODO: Add request fields
+}
