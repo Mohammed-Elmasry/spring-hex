@@ -15,12 +15,12 @@ Before installing Spring-Hex CLI, ensure you have:
 
 ## Download
 
-Download the latest JAR file from the [GitHub Releases](https://github.com/Mohammed-Elmasry/spring-hex/releases) page:
+Download the latest JAR file from the [GitHub Releases](https://github.com/spring-hex/spring-hex/releases) page:
 
 ```bash
 # Example download URL (replace with actual release)
 curl -L -o spring-hex-cli-1.0.0.jar \
-  https://github.com/Mohammed-Elmasry/spring-hex/releases/download/v1.0.0/spring-hex-cli-1.0.0.jar
+  https://github.com/spring-hex/spring-hex/releases/download/v1.0.0/spring-hex-cli-1.0.0.jar
 ```
 
 ## Setup

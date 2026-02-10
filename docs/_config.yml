@@ -2,8 +2,8 @@ title: Spring Hex CLI
 description: Code generation tool for hexagonal architecture in Spring Boot projects
 remote_theme: just-the-docs/just-the-docs
 
-url: ""
-baseurl: "/spring-hex"
+url: "https://spring-hex.github.io"
+baseurl: ""
 
 color_scheme: dark
 
@@ -17,11 +17,11 @@ back_to_top_text: "Back to top"
 
 nav_external_links:
   - title: GitHub
-    url: https://github.com/Mohammed-Elmasry/spring-hex
+    url: https://github.com/spring-hex/spring-hex
 
 aux_links:
   "GitHub":
-    - "https://github.com/Mohammed-Elmasry/spring-hex"
+    - "https://github.com/spring-hex/spring-hex"
 
 footer_content: "Spring Hex CLI &mdash; Hexagonal Architecture scaffolding for Spring Boot"
 
