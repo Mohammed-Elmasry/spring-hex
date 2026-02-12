@@ -74,6 +74,7 @@ public class MakePortCommand implements Callable<Integer> {
                 stubName = "domain/output-port";
                 portPackage = pathResolver.resolve("port-out", aggregateLower);
             }
+            replacements.put("{{PACKAGE}}", portPackage);
 
             String content = stubProcessor.process(stubName, replacements);
             Path outputPath = packageResolver.resolveOutputPath(mixin.getOutputDir(), className, portPackage);

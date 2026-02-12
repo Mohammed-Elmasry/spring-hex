@@ -66,6 +66,7 @@ public class MakeCommandCommand implements Callable<Integer> {
             String commandPackage = pathResolver.resolve("command", aggregateLower);
 
             Map<String, String> replacements = new HashMap<>();
+            replacements.put("{{PACKAGE}}", commandPackage);
             replacements.put("{{BASE_PACKAGE}}", resolvedPackage);
             replacements.put("{{AGGREGATE}}", aggregateLower);
             replacements.put("{{AGGREGATE_CAPITALIZED}}", aggregateCapitalized);

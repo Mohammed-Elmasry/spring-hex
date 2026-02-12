@@ -58,6 +58,7 @@ public class MakeRequestCommand implements Callable<Integer> {
             String dtoPackage = pathResolver.resolve("dto", aggregateLower);
 
             Map<String, String> replacements = new HashMap<>();
+            replacements.put("{{PACKAGE}}", dtoPackage);
             replacements.put("{{BASE_PACKAGE}}", resolvedPackage);
             replacements.put("{{AGGREGATE}}", aggregateLower);
             replacements.put("{{REQUEST_NAME}}", className);

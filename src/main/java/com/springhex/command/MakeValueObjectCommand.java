@@ -58,6 +58,7 @@ public class MakeValueObjectCommand implements Callable<Integer> {
             String modelPackage = pathResolver.resolve("model", aggregateLower);
 
             Map<String, String> replacements = new HashMap<>();
+            replacements.put("{{PACKAGE}}", modelPackage);
             replacements.put("{{BASE_PACKAGE}}", resolvedPackage);
             replacements.put("{{AGGREGATE}}", aggregateLower);
             replacements.put("{{VALUE_OBJECT_NAME}}", className);

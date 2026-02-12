@@ -55,6 +55,7 @@ public class MakeControllerCommand implements Callable<Integer> {
             String controllerPackage = pathResolver.resolve("controller", aggregateLower);
 
             Map<String, String> replacements = new HashMap<>();
+            replacements.put("{{PACKAGE}}", controllerPackage);
             replacements.put("{{BASE_PACKAGE}}", resolvedPackage);
             replacements.put("{{AGGREGATE}}", aggregateLower);
             replacements.put("{{AGGREGATE_CAPITALIZED}}", aggregateCapitalized);

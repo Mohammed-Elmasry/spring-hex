@@ -58,6 +58,7 @@ public class MakeMapperCommand implements Callable<Integer> {
             String mapperPackage = pathResolver.resolve("persistence", aggregateLower);
 
             Map<String, String> replacements = new HashMap<>();
+            replacements.put("{{PACKAGE}}", mapperPackage);
             replacements.put("{{BASE_PACKAGE}}", resolvedPackage);
             replacements.put("{{AGGREGATE}}", aggregateLower);
             replacements.put("{{ENTITY_NAME}}", entity);

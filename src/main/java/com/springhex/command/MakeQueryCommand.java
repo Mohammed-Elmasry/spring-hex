@@ -69,6 +69,7 @@ public class MakeQueryCommand implements Callable<Integer> {
             String queryPackage = pathResolver.resolve("query", aggregateLower);
 
             Map<String, String> replacements = new HashMap<>();
+            replacements.put("{{PACKAGE}}", queryPackage);
             replacements.put("{{BASE_PACKAGE}}", resolvedPackage);
             replacements.put("{{AGGREGATE}}", aggregateLower);
             replacements.put("{{AGGREGATE_CAPITALIZED}}", aggregateCapitalized);

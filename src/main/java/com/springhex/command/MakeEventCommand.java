@@ -61,6 +61,7 @@ public class MakeEventCommand implements Callable<Integer> {
             String eventPackage = pathResolver.resolve("event", aggregateLower);
 
             Map<String, String> replacements = new HashMap<>();
+            replacements.put("{{PACKAGE}}", eventPackage);
             replacements.put("{{BASE_PACKAGE}}", resolvedPackage);
             replacements.put("{{AGGREGATE}}", aggregateLower);
             replacements.put("{{EVENT_NAME}}", className);
@@ -76,6 +77,7 @@ public class MakeEventCommand implements Callable<Integer> {
             if (!noListener) {
                 String listenerPackage = pathResolver.resolve("event-listener", aggregateLower);
                 String listenerClassName = className + "Listener";
+                replacements.put("{{PACKAGE}}", listenerPackage);
 
                 String listenerContent = stubProcessor.process("infrastructure/event-listener", replacements);
                 Path listenerPath = packageResolver.resolveOutputPath(mixin.getOutputDir(), listenerClassName, listenerPackage);

@@ -72,6 +72,7 @@ public class MakeAdapterCommand implements Callable<Integer> {
             pathResolver.populatePackagePlaceholders(aggregateLower, replacements);
 
             String adapterPackage = pathResolver.resolve("adapter", java.util.Map.of("aggregate", aggregateLower, "category", adapterCategory));
+            replacements.put("{{PACKAGE}}", adapterPackage);
 
             String content = stubProcessor.process("infrastructure/adapter", replacements);
             Path outputPath = packageResolver.resolveOutputPath(mixin.getOutputDir(), className, adapterPackage);
