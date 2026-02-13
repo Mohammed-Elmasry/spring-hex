@@ -557,15 +557,15 @@ spring-hex make:factory <entityName> [options]
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
-| `<entityName>` | Yes | Entity name (e.g., User, Product) |
-| `-a, --aggregate` | No | Aggregate name (defaults to entity name lowercase) |
+| `<entityName>` | Yes | Entity class name (e.g., UserEntity, BookEntity) |
+| `-a, --aggregate` | No | Aggregate name (defaults to entity name lowercase, "Entity" suffix stripped) |
 | `-p, --package` | No | Base package (auto-detected if not specified) |
 | `-o, --output` | No | Output directory (defaults to current directory) |
 
 **Example:**
 ```bash
-spring-hex make:factory User
-spring-hex make:factory OrderItem -a order
+spring-hex make:factory UserEntity
+spring-hex make:factory OrderItemEntity -a order
 ```
 
 **Generated Files:**
@@ -577,18 +577,18 @@ spring-hex make:factory OrderItem -a order
 ```java
 // Inject the factory (it's a Spring component)
 @Autowired
-private UserFactory userFactory;
+private UserEntityFactory userEntityFactory;
 
 // create() saves to database and returns the persisted entity
-User user = userFactory.create();
-List<User> users = userFactory.create(50);
+UserEntity user = userEntityFactory.create();
+List<UserEntity> users = userEntityFactory.create(50);
 
 // make() creates in memory only (useful for unit tests)
-User transient = userFactory.make();
+UserEntity transient = userEntityFactory.make();
 
 // Nested factories: create() persists dependencies automatically
-// In BookFactory.make():
-//   .author(authorFactory.create())   // author saved first
+// In BookEntityFactory.make():
+//   .author(authorEntityFactory.create())   // author saved first
 ```
 
 **Note:** Add `net.datafaker:datafaker` to your project dependencies to use factories.
@@ -610,15 +610,15 @@ spring-hex make:seeder <seederName> --entity <entityName> [options]
 | Parameter | Required | Description |
 |-----------|----------|-------------|
 | `<seederName>` | Yes | Seeder name (e.g., UserSeeder — "Seeder" suffix auto-appended) |
-| `--entity` | Yes | Entity name for factory/repository imports (e.g., User) |
-| `-a, --aggregate` | No | Aggregate name (defaults to entity name lowercase) |
+| `--entity` | Yes | Entity class name for factory import (e.g., UserEntity) |
+| `-a, --aggregate` | No | Aggregate name (defaults to entity name lowercase, "Entity" suffix stripped) |
 | `-p, --package` | No | Base package (auto-detected if not specified) |
 | `-o, --output` | No | Output directory (defaults to current directory) |
 
 **Example:**
 ```bash
-spring-hex make:seeder UserSeeder --entity User
-spring-hex make:seeder OrderItemSeeder --entity OrderItem -a order
+spring-hex make:seeder UserSeeder --entity UserEntity
+spring-hex make:seeder OrderItemSeeder --entity OrderItemEntity -a order
 ```
 
 **Generated Files:**

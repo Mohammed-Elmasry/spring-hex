@@ -1,6 +1,6 @@
 package {{PACKAGE}};
 
-import {{PACKAGE_MODEL}}.{{ENTITY_NAME}};
+import {{PACKAGE_REPOSITORY}}.{{ENTITY_NAME}};
 import {{PACKAGE_REPOSITORY}}.{{ENTITY_NAME}}Repository;
 import net.datafaker.Faker;
 import lombok.RequiredArgsConstructor;

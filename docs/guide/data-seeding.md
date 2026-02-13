@@ -33,8 +33,8 @@ Factories generate fake entity instances. Like Laravel, `create()` persists to t
 ### Generating a Factory
 
 ```bash
-spring-hex make:factory User
-spring-hex make:factory OrderItem -a order
+spring-hex make:factory UserEntity
+spring-hex make:factory OrderItemEntity -a order
 ```
 
 This creates a factory `@Component` with a repository injection. If the repository doesn't exist yet, it's auto-generated.
@@ -42,25 +42,25 @@ This creates a factory `@Component` with a repository injection. If the reposito
 ```java
 @Component
 @RequiredArgsConstructor
-public class UserFactory {
+public class UserEntityFactory {
 
-    private final UserRepository repository;
+    private final UserEntityRepository repository;
     private static final Faker faker = new Faker();
 
-    public User make() {
-        return User.builder()
+    public UserEntity make() {
+        return UserEntity.builder()
                 .name(faker.name().fullName())
                 .email(faker.internet().emailAddress())
                 .build();
     }
 
-    public List<User> make(int count) { ... }
+    public List<UserEntity> make(int count) { ... }
 
-    public User create() {
+    public UserEntity create() {
         return repository.save(make());
     }
 
-    public List<User> create(int count) {
+    public List<UserEntity> create(int count) {
         return repository.saveAll(make(count));
     }
 }
@@ -77,31 +77,31 @@ public class UserFactory {
 
 ### Nested Factories
 
-For entities with relationships (e.g., Book belongs to Author), call the dependency factory's `create()` to persist it first:
+For entities with relationships (e.g., BookEntity belongs to AuthorEntity), call the dependency factory's `create()` to persist it first:
 
 ```java
 @Component
 @RequiredArgsConstructor
-public class BookFactory {
+public class BookEntityFactory {
 
-    private final BookRepository repository;
-    private final AuthorFactory authorFactory;
+    private final BookEntityRepository repository;
+    private final AuthorEntityFactory authorEntityFactory;
     private static final Faker faker = new Faker();
 
-    public Book make() {
-        return Book.builder()
+    public BookEntity make() {
+        return BookEntity.builder()
                 .title(faker.book().title())
-                .author(authorFactory.create())  // persisted before Book
+                .author(authorEntityFactory.create())  // persisted before Book
                 .build();
     }
 
-    public Book create() {
+    public BookEntity create() {
         return repository.save(make());
     }
 }
 ```
 
-Because `authorFactory.create()` saves the Author first, Hibernate won't throw a `TransientPropertyValueException`.
+Because `authorEntityFactory.create()` saves the AuthorEntity first, Hibernate won't throw a `TransientPropertyValueException`.
 
 ### Datafaker Dependency
 
@@ -124,8 +124,8 @@ Seeders orchestrate factories to populate the database.
 ### Generating a Seeder
 
 ```bash
-spring-hex make:seeder UserSeeder --entity User
-spring-hex make:seeder BookSeeder --entity Book
+spring-hex make:seeder UserSeeder --entity UserEntity
+spring-hex make:seeder BookSeeder --entity BookEntity
 ```
 
 The first `make:seeder` call also auto-generates:
@@ -142,7 +142,7 @@ Fill in the `seed()` method — the factory handles persistence:
 @Slf4j
 public class UserSeeder implements Seeder {
 
-    private final UserFactory factory;
+    private final UserEntityFactory factory;
 
     @Override
     public void seed() {
@@ -213,12 +213,12 @@ The `SeedRunner` (a `CommandLineRunner`) picks up the `--seed=` argument and inv
 
 ```bash
 # 1. Generate factories (repos auto-created if missing)
-spring-hex make:factory Author
-spring-hex make:factory Book
+spring-hex make:factory AuthorEntity
+spring-hex make:factory BookEntity
 
 # 2. Generate seeders
-spring-hex make:seeder AuthorSeeder --entity Author
-spring-hex make:seeder BookSeeder --entity Book
+spring-hex make:seeder AuthorSeeder --entity AuthorEntity
+spring-hex make:seeder BookSeeder --entity BookEntity
 
 # 3. Implement factory make() methods with Datafaker
 # 4. Implement seeder seed() methods (call factory.create())

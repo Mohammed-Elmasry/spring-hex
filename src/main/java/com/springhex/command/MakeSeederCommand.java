@@ -57,7 +57,7 @@ public class MakeSeederCommand implements Callable<Integer> {
             HexPathResolver pathResolver = config.getPathResolver();
 
             String className = normalizeSeederName(seederName);
-            String entityCapitalized = StringUtils.capitalize(stripEntitySuffix(entityName));
+            String entityCapitalized = StringUtils.capitalize(entityName);
             String aggregateLower = (aggregate != null ? aggregate : stripEntitySuffix(entityName)).toLowerCase();
 
             String seederPackage = pathResolver.resolveStatic("seeder");

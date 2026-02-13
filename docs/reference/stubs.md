@@ -1237,16 +1237,15 @@ Generates a factory `@Component` with `make()` (in-memory) and `create()` (persi
 **Used by:** `make:factory`
 
 **Key Placeholders:**
-- `{{ENTITY_NAME}}` - Entity class name
-- `{{PACKAGE_MODEL}}` - Resolved model package for entity import
-- `{{PACKAGE_REPOSITORY}}` - Resolved persistence package for repository import
+- `{{ENTITY_NAME}}` - Entity class name (e.g., `UserEntity`)
+- `{{PACKAGE_REPOSITORY}}` - Resolved persistence package for entity and repository imports
 
 **Example Output:**
 ```java
 package com.app.infrastructure.factory.user;
 
-import com.app.domain.user.model.User;
-import com.app.infrastructure.persistence.user.UserRepository;
+import com.app.infrastructure.persistence.user.UserEntity;
+import com.app.infrastructure.persistence.user.UserEntityRepository;
 import net.datafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -1256,24 +1255,24 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class UserFactory {
+public class UserEntityFactory {
 
-    private final UserRepository repository;
+    private final UserEntityRepository repository;
     private static final Faker faker = new Faker();
 
-    public User make() {
-        return User.builder()
+    public UserEntity make() {
+        return UserEntity.builder()
                 // TODO: Set fields using faker
                 .build();
     }
 
-    public List<User> make(int count) { ... }
+    public List<UserEntity> make(int count) { ... }
 
-    public User create() {
+    public UserEntity create() {
         return repository.save(make());
     }
 
-    public List<User> create(int count) {
+    public List<UserEntity> create(int count) {
         return repository.saveAll(make(count));
     }
 }
@@ -1299,7 +1298,7 @@ Generates a database seeder component that implements the `Seeder` interface.
 ```java
 package com.app.infrastructure.seeder;
 
-import com.app.infrastructure.factory.user.UserFactory;
+import com.app.infrastructure.factory.user.UserEntityFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -1309,7 +1308,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class UserSeeder implements Seeder {
 
-    private final UserFactory factory;
+    private final UserEntityFactory factory;
 
     @Override
     public void seed() {

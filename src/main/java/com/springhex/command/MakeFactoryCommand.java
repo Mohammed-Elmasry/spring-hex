@@ -60,7 +60,7 @@ public class MakeFactoryCommand implements Callable<Integer> {
             String resolvedPackage = config.getBasePackage();
             HexPathResolver pathResolver = config.getPathResolver();
 
-            String capitalized = StringUtils.capitalize(stripEntitySuffix(entityName));
+            String capitalized = StringUtils.capitalize(entityName);
             String aggregateLower = (aggregate != null ? aggregate : stripEntitySuffix(entityName)).toLowerCase();
 
             String factoryPackage = pathResolver.resolve("factory", aggregateLower);
