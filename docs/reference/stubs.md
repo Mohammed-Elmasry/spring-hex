@@ -1223,6 +1223,168 @@ Generates a master YAML changelog file.
 
 ---
 
+## Data Seeding Stubs
+
+Stubs for data factories, seeders, and seeding infrastructure.
+
+#### factory.stub
+{: .d-inline-block }
+Data
+{: .label .label-purple }
+
+Generates a data factory class using Datafaker for creating fake entity instances.
+
+**Used by:** `make:factory`
+
+**Key Placeholders:**
+- `{{ENTITY_NAME}}` - Entity class name
+- `{{PACKAGE_MODEL}}` - Resolved model package for entity import
+
+**Example Output:**
+```java
+package com.app.infrastructure.factory.user;
+
+import com.app.domain.user.model.User;
+import net.datafaker.Faker;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserFactory {
+
+    private static final Faker faker = new Faker();
+
+    public static User create() {
+        return User.builder()
+                // TODO: Set fields using faker
+                .build();
+    }
+
+    public static List<User> create(int count) {
+        List<User> list = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            list.add(create());
+        }
+        return list;
+    }
+}
+```
+
+---
+
+#### seeder.stub
+{: .d-inline-block }
+Data
+{: .label .label-purple }
+
+Generates a database seeder component that implements the `Seeder` interface.
+
+**Used by:** `make:seeder`
+
+**Key Placeholders:**
+- `{{SEEDER_NAME}}` - Seeder class name
+- `{{ENTITY_NAME}}` - Entity class name for repository/factory imports
+- `{{PACKAGE_FACTORY}}` - Resolved factory package
+- `{{PACKAGE_REPOSITORY}}` - Resolved persistence/repository package
+
+**Example Output:**
+```java
+package com.app.infrastructure.seeder;
+
+import com.app.infrastructure.factory.user.UserFactory;
+import com.app.infrastructure.persistence.user.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+@Slf4j
+public class UserSeeder implements Seeder {
+
+    private final UserRepository repository;
+
+    @Override
+    public void seed() {
+        log.info("UserSeeder: seeding...");
+        // Define your seed data here
+        log.info("UserSeeder: done");
+    }
+}
+```
+
+---
+
+#### seeder-interface.stub
+{: .d-inline-block }
+Data
+{: .label .label-purple }
+
+Generates the `Seeder` interface that all seeders implement. Auto-generated once on the first `make:seeder` call.
+
+**Used by:** `make:seeder` (auto-generated)
+
+**Example Output:**
+```java
+package com.app.infrastructure.seeder;
+
+public interface Seeder {
+
+    void seed();
+}
+```
+
+---
+
+#### seed-runner.stub
+{: .d-inline-block }
+Data
+{: .label .label-purple }
+
+Generates the `SeedRunner` component that dispatches `--seed=` arguments to the appropriate seeders. Auto-generated once on the first `make:seeder` call.
+
+**Used by:** `make:seeder` (auto-generated)
+
+**Key Features:**
+- `db:seed --all` runs seeders in the order listed in `SEEDERS`
+- `db:seed <SeederName>` runs a single seeder by bean name
+- Developers control execution order by arranging the `SEEDERS` list
+
+**Example Output:**
+```java
+package com.app.infrastructure.seeder;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+
+@Component
+@RequiredArgsConstructor
+@Slf4j
+public class SeedRunner implements CommandLineRunner {
+
+    private final ApplicationContext context;
+
+    // Add your seeders here in the order they should run.
+    // Independent entities first, then entities that depend on them.
+    private static final List<Class<? extends Seeder>> SEEDERS = List.of(
+            // AuthorSeeder.class,
+            // BookSeeder.class
+    );
+
+    @Override
+    public void run(String... args) throws Exception {
+        // Dispatches --seed=all or --seed=<SeederName>
+    }
+}
+```
+
+---
+
 ## Test Stubs
 
 Stubs for test class generation.
@@ -1334,6 +1496,9 @@ Complete reference of all placeholder variables used in stubs.
 | `{{PACKAGE_DOMAIN_ROOT}}` | Resolved domain root package | Aggregate stubs | `com.app.domain.order` |
 | `{{TEST_PACKAGE}}` | Test package | Test stubs | `com.app.domain.order` |
 | `{{TEST_NAME}}` | Test class name | Test stubs | `OrderServiceTest` |
+| `{{SEEDER_NAME}}` | Seeder class name | Seeder stubs | `UserSeeder` |
+| `{{PACKAGE_FACTORY}}` | Resolved factory package | Seeder stubs | `com.app.infrastructure.factory.user` |
+| `{{PACKAGE_REPOSITORY}}` | Resolved repository package | Seeder stubs | `com.app.infrastructure.persistence.user` |
 | `{{MIGRATION_NAME}}` | Migration name | Migration stubs | `create_orders_table` |
 | `{{CHANGESET_ID}}` | Liquibase changeset ID | Liquibase stubs | `create_orders_table-1` |
 | `{{TIMESTAMP}}` | Current timestamp | Flyway stubs | `20260210123045` |

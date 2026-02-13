@@ -15,6 +15,7 @@ The guide section covers:
 - **Architecture** — Understanding hexagonal architecture (Ports & Adapters) and how Spring-Hex implements domain-driven design patterns
 - **Configuration** — Complete reference for the `.hex/config.yml` file and package resolution strategies
 - **CQRS Pattern** — Implementing Command Query Responsibility Segregation with the mediator pattern
+- **Data Seeding** — Generating factories with Datafaker and seeders for populating dev/test databases
 - **Database Migrations** — Working with Flyway and Liquibase for version-controlled database changes
 - **Testing** — Generating and running feature tests and unit tests
 
