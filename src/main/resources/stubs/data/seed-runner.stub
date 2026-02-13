@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -14,6 +14,13 @@ import java.util.*;
 public class SeedRunner implements CommandLineRunner {
 
     private final ApplicationContext context;
+
+    // Add your seeders here in the order they should run.
+    // Independent entities first, then entities that depend on them.
+    private static final List<Class<? extends Seeder>> SEEDERS = List.of(
+            // AuthorSeeder.class,
+            // BookSeeder.class
+    );
 
     @Override
     public void run(String... args) throws Exception {
@@ -26,69 +33,18 @@ public class SeedRunner implements CommandLineRunner {
         if (target == null) return;
 
         if ("all".equalsIgnoreCase(target)) {
-            List<Seeder> seeders = new ArrayList<>(context.getBeansOfType(Seeder.class).values());
-            List<Seeder> ordered = topologicalSort(seeders);
-            for (Seeder seeder : ordered) {
+            for (Class<? extends Seeder> seederClass : SEEDERS) {
+                Seeder seeder = context.getBean(seederClass);
                 log.info("Running seeder: {}", seeder.getClass().getSimpleName());
                 seeder.seed();
             }
         } else {
             String beanName = Character.toLowerCase(target.charAt(0)) + target.substring(1);
             Seeder seeder = (Seeder) context.getBean(beanName);
-            runWithDependencies(seeder, new LinkedHashSet<>());
+            log.info("Running seeder: {}", target);
+            seeder.seed();
         }
 
         log.info("Seeding complete.");
-    }
-
-    private void runWithDependencies(Seeder seeder, Set<Class<?>> executed) {
-        if (executed.contains(seeder.getClass())) return;
-
-        for (Class<? extends Seeder> dep : seeder.dependsOn()) {
-            Seeder depSeeder = context.getBean(dep);
-            runWithDependencies(depSeeder, executed);
-        }
-
-        log.info("Running seeder: {}", seeder.getClass().getSimpleName());
-        seeder.seed();
-        executed.add(seeder.getClass());
-    }
-
-    private List<Seeder> topologicalSort(List<Seeder> seeders) {
-        Map<Class<?>, Seeder> byClass = new LinkedHashMap<>();
-        for (Seeder s : seeders) {
-            byClass.put(s.getClass(), s);
-        }
-
-        List<Seeder> result = new ArrayList<>();
-        Set<Class<?>> visited = new HashSet<>();
-        Set<Class<?>> visiting = new HashSet<>();
-
-        for (Seeder seeder : seeders) {
-            visit(seeder, byClass, visited, visiting, result);
-        }
-
-        return result;
-    }
-
-    private void visit(Seeder seeder, Map<Class<?>, Seeder> byClass,
-                       Set<Class<?>> visited, Set<Class<?>> visiting, List<Seeder> result) {
-        Class<?> cls = seeder.getClass();
-        if (visited.contains(cls)) return;
-        if (visiting.contains(cls)) {
-            throw new IllegalStateException("Circular seeder dependency detected: " + cls.getSimpleName());
-        }
-
-        visiting.add(cls);
-        for (Class<? extends Seeder> dep : seeder.dependsOn()) {
-            Seeder depSeeder = byClass.get(dep);
-            if (depSeeder == null) {
-                depSeeder = context.getBean(dep);
-            }
-            visit(depSeeder, byClass, visited, visiting, result);
-        }
-        visiting.remove(cls);
-        visited.add(cls);
-        result.add(seeder);
     }
 }

@@ -1,13 +1,6 @@
 package {{PACKAGE}};
 
-import java.util.Collections;
-import java.util.List;
-
 public interface Seeder {
 
     void seed();
-
-    default List<Class<? extends Seeder>> dependsOn() {
-        return Collections.emptyList();
-    }
 }

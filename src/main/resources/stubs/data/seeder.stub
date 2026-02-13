@@ -6,22 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class {{SEEDER_NAME}} implements Seeder {
 
     private final {{ENTITY_NAME}}Repository repository;
-
-    @Override
-    public List<Class<? extends Seeder>> dependsOn() {
-        return Collections.emptyList();
-        // To declare dependencies, return the seeder classes that must run first:
-        // return List.of(AuthorSeeder.class);
-    }
 
     @Override
     public void seed() {

@@ -618,37 +618,20 @@ spring-hex make:seeder OrderItemSeeder --entity OrderItem -a order
 ```
 
 **Generated Files:**
-- Seeder class implementing `Seeder` interface with `seed()` and `dependsOn()` methods
+- Seeder class implementing `Seeder` interface with a `seed()` method
 - `Seeder` interface (auto-generated once, on first seeder creation)
 - `SeedRunner` infrastructure component (auto-generated once, on first seeder creation)
 
-**Dependency Ordering:**
+**Execution Order:**
 
-Seeders support topological dependency ordering. If `BookSeeder` depends on `AuthorSeeder` (because books reference authors), declare it via `dependsOn()`:
+The `SeedRunner` contains an ordered list of seeder classes. When running `db:seed --all`, seeders execute in the order they appear in the list. Add your seeders in dependency order — independent entities first:
 
 ```java
-@Component
-@RequiredArgsConstructor
-@Slf4j
-public class BookSeeder implements Seeder {
-
-    private final BookRepository repository;
-
-    @Override
-    public List<Class<? extends Seeder>> dependsOn() {
-        return List.of(AuthorSeeder.class);
-    }
-
-    @Override
-    public void seed() {
-        repository.saveAll(BookFactory.create(20));
-    }
-}
+private static final List<Class<? extends Seeder>> SEEDERS = List.of(
+        AuthorSeeder.class,    // no dependencies — runs first
+        BookSeeder.class       // depends on Author — runs second
+);
 ```
-
-When running `db:seed --all`, the `SeedRunner` performs a topological sort — seeders with no dependencies run first, then their dependents, and so on. Circular dependencies are detected and reported as errors.
-
-When running a single seeder (e.g., `db:seed BookSeeder`), its dependencies are automatically resolved and executed first.
 
 ---
 
@@ -679,8 +662,7 @@ spring-hex db:seed --all
 **Behavior:**
 - Detects Maven or Gradle and runs the Spring Boot application with `--seed=<target>` argument
 - The auto-generated `SeedRunner` picks up the argument and invokes the matching seeder's `seed()` method
-- `--all` discovers all `Seeder` beans, performs a **topological sort** based on `dependsOn()` declarations, and runs them in dependency order
-- Running a single seeder also resolves and executes its dependencies first
+- `--all` runs all seeders listed in `SeedRunner.SEEDERS` in the order they appear
 
 ---
 
