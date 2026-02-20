@@ -4,6 +4,7 @@ import com.springhex.config.ConfigResolver;
 import com.springhex.config.ConfigurationException;
 import com.springhex.config.HexPathResolver;
 import com.springhex.config.ResolvedConfig;
+import com.springhex.generator.ConfigAppender;
 import com.springhex.generator.FileGenerator;
 import com.springhex.generator.StubProcessor;
 import com.springhex.util.PackageResolver;
@@ -16,6 +17,7 @@ import picocli.CommandLine.Parameters;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -38,11 +40,13 @@ public class MakeModelCommand implements Callable<Integer> {
     private final StubProcessor stubProcessor;
     private final FileGenerator fileGenerator;
     private final PackageResolver packageResolver;
+    private final ConfigAppender configAppender;
 
     public MakeModelCommand() {
         this.stubProcessor = new StubProcessor();
         this.fileGenerator = new FileGenerator();
         this.packageResolver = new PackageResolver();
+        this.configAppender = new ConfigAppender();
     }
 
     @Override
@@ -64,6 +68,22 @@ public class MakeModelCommand implements Callable<Integer> {
             // Generate Domain Model
             String domainPackage = pathResolver.resolve("model", aggregateLower);
             generateFile("domain/model", model, domainPackage, replacements);
+
+            // Register @Bean in DomainConfig if it exists
+            String configPackage = pathResolver.resolveStatic("config");
+            String beanName = Character.toLowerCase(model.charAt(0)) + model.substring(1);
+            Map<String, String> beanReplacements = new HashMap<>();
+            beanReplacements.put("{{CLASS_NAME}}", model);
+            beanReplacements.put("{{BEAN_NAME}}", beanName);
+            List<String> imports = List.of(
+                domainPackage + "." + model,
+                "org.springframework.context.annotation.Bean"
+            );
+            boolean beanAdded = configAppender.appendBeanIfAbsent(mixin.getOutputDir(), configPackage,
+                "infrastructure/bean-method-model", beanReplacements, imports, beanName);
+            if (beanAdded) {
+                System.out.println("Updated: DomainConfig.java with @Bean for " + model);
+            }
 
             System.out.println("\nDomain model generated successfully!");
             return 0;

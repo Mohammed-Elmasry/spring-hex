@@ -55,17 +55,17 @@ public class MakeResponseCommand implements Callable<Integer> {
             String className = normalizeResponseName(responseName);
             String aggregateLower = aggregate.toLowerCase();
 
-            String dtoPackage = pathResolver.resolve("dto", aggregateLower);
+            String responsePackage = pathResolver.resolve("response", aggregateLower);
 
             Map<String, String> replacements = new HashMap<>();
-            replacements.put("{{PACKAGE}}", dtoPackage);
+            replacements.put("{{PACKAGE}}", responsePackage);
             replacements.put("{{BASE_PACKAGE}}", resolvedPackage);
             replacements.put("{{AGGREGATE}}", aggregateLower);
             replacements.put("{{RESPONSE_NAME}}", className);
             pathResolver.populatePackagePlaceholders(aggregateLower, replacements);
 
             String content = stubProcessor.process("domain/response", replacements);
-            Path outputPath = packageResolver.resolveOutputPath(mixin.getOutputDir(), className, dtoPackage);
+            Path outputPath = packageResolver.resolveOutputPath(mixin.getOutputDir(), className, responsePackage);
             fileGenerator.generate(outputPath, content);
             System.out.println("Created: " + outputPath);
 

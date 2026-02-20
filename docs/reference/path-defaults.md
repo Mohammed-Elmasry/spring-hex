@@ -45,12 +45,11 @@ Default path patterns for hexagonal architecture components.
 | `port_out` | `domain.{aggregate}.port.out` | `aggregate` | `com.app.domain.order.port.out` |
 | `value_object` | `domain.{aggregate}.model` | `aggregate` | `com.app.domain.order.model` |
 | `aggregate_root` | `domain.{aggregate}` | `aggregate` | `com.app.domain.order` |
-| `adapter` | `infrastructure.{aggregate}.adapter` | `aggregate` | `com.app.infrastructure.order.adapter` |
-| `repository` | `infrastructure.{aggregate}.persistence` | `aggregate` | `com.app.infrastructure.order.persistence` |
-| `controller` | `infrastructure.{aggregate}.controller` | `aggregate` | `com.app.infrastructure.order.controller` |
-| `mapper` | `infrastructure.{aggregate}.mapper` | `aggregate` | `com.app.infrastructure.order.mapper` |
-| `request` | `infrastructure.{aggregate}.controller.dto` | `aggregate` | `com.app.infrastructure.order.controller.dto` |
-| `response` | `infrastructure.{aggregate}.controller.dto` | `aggregate` | `com.app.infrastructure.order.controller.dto` |
+| `adapter` | `infrastructure.{category}.{aggregate}` | `aggregate`, `category` | `com.app.infrastructure.persistence.order` |
+| `persistence` | `infrastructure.persistence.{aggregate}` | `aggregate` | `com.app.infrastructure.persistence.order` |
+| `controller` | `infrastructure.web.{aggregate}` | `aggregate` | `com.app.infrastructure.web.order` |
+| `request` | `infrastructure.web.{aggregate}` | `aggregate` | `com.app.infrastructure.web.order` |
+| `response` | `infrastructure.web.{aggregate}` | `aggregate` | `com.app.infrastructure.web.order` |
 | `mediator` | `application.mediator` | (none) | `com.app.application.mediator` |
 | `config` | `infrastructure.config` | (none) | `com.app.infrastructure.config` |
 | `factory` | `infrastructure.factory.{aggregate}` | `aggregate` | `com.app.infrastructure.factory.order` |

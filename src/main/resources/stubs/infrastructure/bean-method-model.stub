@@ -1,0 +1,5 @@
+
+    @Bean
+    public {{CLASS_NAME}} {{BEAN_NAME}}() {
+        return new {{CLASS_NAME}}();
+    }

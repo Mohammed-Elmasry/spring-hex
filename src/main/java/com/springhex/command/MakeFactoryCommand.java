@@ -53,6 +53,14 @@ public class MakeFactoryCommand implements Callable<Integer> {
         return name;
     }
 
+    private String stripFactorySuffix(String name) {
+        String capitalized = StringUtils.capitalize(name);
+        if (capitalized.endsWith("Factory")) {
+            return capitalized.substring(0, capitalized.length() - "Factory".length());
+        }
+        return capitalized;
+    }
+
     @Override
     public Integer call() {
         try {
@@ -60,8 +68,10 @@ public class MakeFactoryCommand implements Callable<Integer> {
             String resolvedPackage = config.getBasePackage();
             HexPathResolver pathResolver = config.getPathResolver();
 
-            String capitalized = StringUtils.capitalize(entityName);
-            String aggregateLower = (aggregate != null ? aggregate : stripEntitySuffix(entityName)).toLowerCase();
+            // Strip "Factory" suffix so that both "User" and "UserFactory" produce
+            // the same output: a UserFactory class backed by {{ENTITY_NAME}}Factory in the stub.
+            String capitalized = stripFactorySuffix(entityName);
+            String aggregateLower = (aggregate != null ? aggregate : stripEntitySuffix(capitalized)).toLowerCase();
 
             String factoryPackage = pathResolver.resolve("factory", aggregateLower);
             String repositoryPackage = pathResolver.resolve("persistence", aggregateLower);

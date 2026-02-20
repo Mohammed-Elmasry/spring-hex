@@ -52,7 +52,9 @@ public class MakeMapperCommand implements Callable<Integer> {
             String resolvedPackage = config.getBasePackage();
             HexPathResolver pathResolver = config.getPathResolver();
 
-            String entity = StringUtils.capitalize(entityName);
+            // Strip "Mapper" suffix so that both "Order" and "OrderMapper" produce
+            // the same output: an OrderMapper class backed by {{ENTITY_NAME}}Mapper in the stub.
+            String entity = stripMapperSuffix(entityName);
             String aggregateLower = aggregate.toLowerCase();
 
             String mapperPackage = pathResolver.resolve("persistence", aggregateLower);
@@ -78,5 +80,13 @@ public class MakeMapperCommand implements Callable<Integer> {
             System.err.println("Error generating mapper: " + e.getMessage());
             return 1;
         }
+    }
+
+    private String stripMapperSuffix(String name) {
+        String capitalized = StringUtils.capitalize(name);
+        if (capitalized.endsWith("Mapper")) {
+            return capitalized.substring(0, capitalized.length() - "Mapper".length());
+        }
+        return capitalized;
     }
 }

@@ -48,8 +48,11 @@ public class MakeControllerCommand implements Callable<Integer> {
             String resolvedPackage = config.getBasePackage();
             HexPathResolver pathResolver = config.getPathResolver();
 
-            String aggregateLower = aggregate.toLowerCase();
-            String aggregateCapitalized = StringUtils.capitalize(aggregate);
+            // Strip "Controller" suffix before deriving aggregate name so that
+            // both "order" and "OrderController" produce "OrderController".
+            String aggregateBase = stripControllerSuffix(aggregate);
+            String aggregateLower = aggregateBase.toLowerCase();
+            String aggregateCapitalized = StringUtils.capitalize(aggregateBase);
             String aggregatePlural = StringUtils.pluralize(aggregateLower);
 
             String controllerPackage = pathResolver.resolve("controller", aggregateLower);
@@ -76,5 +79,13 @@ public class MakeControllerCommand implements Callable<Integer> {
             System.err.println("Error generating controller: " + e.getMessage());
             return 1;
         }
+    }
+
+    private String stripControllerSuffix(String name) {
+        String capitalized = StringUtils.capitalize(name);
+        if (capitalized.endsWith("Controller")) {
+            return capitalized.substring(0, capitalized.length() - "Controller".length());
+        }
+        return capitalized;
     }
 }

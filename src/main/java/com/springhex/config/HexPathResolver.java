@@ -16,6 +16,8 @@ public class HexPathResolver {
             Map.entry("port-out", "domain.{aggregate}.port.out"),
             Map.entry("persistence", "infrastructure.persistence.{aggregate}"),
             Map.entry("controller", "infrastructure.web.{aggregate}"),
+            Map.entry("request", "infrastructure.web.{aggregate}"),
+            Map.entry("response", "infrastructure.web.{aggregate}"),
             Map.entry("adapter", "infrastructure.{category}.{aggregate}"),
             Map.entry("config", "infrastructure.config"),
             Map.entry("mediator", "infrastructure.mediator"),

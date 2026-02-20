@@ -4,6 +4,7 @@ import com.springhex.config.ConfigResolver;
 import com.springhex.config.ConfigurationException;
 import com.springhex.config.HexPathResolver;
 import com.springhex.config.ResolvedConfig;
+import com.springhex.generator.ConfigAppender;
 import com.springhex.generator.FileGenerator;
 import com.springhex.generator.StubProcessor;
 import com.springhex.util.PackageResolver;
@@ -16,6 +17,7 @@ import picocli.CommandLine.Parameters;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -41,11 +43,13 @@ public class MakeEntityCommand implements Callable<Integer> {
     private final StubProcessor stubProcessor;
     private final FileGenerator fileGenerator;
     private final PackageResolver packageResolver;
+    private final ConfigAppender configAppender;
 
     public MakeEntityCommand() {
         this.stubProcessor = new StubProcessor();
         this.fileGenerator = new FileGenerator();
         this.packageResolver = new PackageResolver();
+        this.configAppender = new ConfigAppender();
     }
 
     @Override
@@ -73,6 +77,23 @@ public class MakeEntityCommand implements Callable<Integer> {
             // 2. Generate JPA Entity
             String infraPackage = pathResolver.resolve("persistence", aggregateLower);
             generateFile("infrastructure/jpa-entity", entity + "JpaEntity", infraPackage, replacements);
+
+            // Register domain entity @Bean in DomainConfig if it exists.
+            // The JPA entity is a persistence concern managed by JPA — it is intentionally excluded.
+            String configPackage = pathResolver.resolveStatic("config");
+            String beanName = Character.toLowerCase(entity.charAt(0)) + entity.substring(1);
+            Map<String, String> beanReplacements = new HashMap<>();
+            beanReplacements.put("{{CLASS_NAME}}", entity);
+            beanReplacements.put("{{BEAN_NAME}}", beanName);
+            List<String> imports = List.of(
+                domainPackage + "." + entity,
+                "org.springframework.context.annotation.Bean"
+            );
+            boolean beanAdded = configAppender.appendBeanIfAbsent(mixin.getOutputDir(), configPackage,
+                "infrastructure/bean-method-model", beanReplacements, imports, beanName);
+            if (beanAdded) {
+                System.out.println("Updated: DomainConfig.java with @Bean for " + entity);
+            }
 
             System.out.println("\nEntities generated successfully!");
             return 0;
