@@ -13,56 +13,77 @@ Before installing Spring-Hex CLI, ensure you have:
 - **Java 17 or higher**: Verify with `java -version`
 - **A Spring Boot project**: Either existing or newly created
 
-## Download
+## Quick Install (Recommended)
 
-Download the latest JAR file from the [GitHub Releases](https://github.com/Spring-hex/Spring-hex.github.io/releases) page:
+Run the install script — it downloads the JAR, creates a wrapper, and adds it to your PATH:
 
 ```bash
-# Example download URL (replace with actual release)
-curl -L -o spring-hex-cli-1.0.0.jar \
-  https://github.com/Spring-hex/Spring-hex.github.io/releases/download/v1.0.0/spring-hex-cli-1.0.0.jar
+curl -fsSL https://raw.githubusercontent.com/Spring-hex/Spring-hex.github.io/master/install.sh | bash
 ```
 
-## Setup
-
-### Option 1: Shell Alias (Recommended)
-
-Create a shell alias for convenient access. Add this line to your shell configuration file (`~/.bashrc`, `~/.zshrc`, or equivalent):
+Then reload your shell:
 
 ```bash
-alias spring-hex='java -jar /path/to/spring-hex-cli-1.0.0.jar'
+source ~/.zshrc  # or ~/.bashrc
 ```
 
-Replace `/path/to/` with the actual location where you saved the JAR file.
-
-Reload your shell configuration:
+That's it. Verify with:
 
 ```bash
-source ~/.bashrc  # or ~/.zshrc
+spring-hex --version
 ```
 
-### Option 2: Add to PATH
+---
 
-For system-wide access, move the JAR to a directory in your PATH and create a wrapper script:
+## Manual Install
+
+If you prefer to install manually:
+
+### 1. Download the JAR
 
 ```bash
-# Move JAR to a bin directory
-sudo mkdir -p /usr/local/bin
-sudo mv spring-hex-cli-1.0.0.jar /usr/local/bin/
+curl -fsSL -o spring-hex-cli.jar \
+  https://github.com/Spring-hex/Spring-hex.github.io/releases/latest/download/spring-hex-cli-1.0.0.jar
+```
 
-# Create wrapper script
-sudo tee /usr/local/bin/spring-hex > /dev/null << 'EOF'
+### 2. Choose a setup method
+
+**Option A: Shell Alias**
+
+Add to your `~/.bashrc` or `~/.zshrc`:
+
+```bash
+alias spring-hex='java -jar /path/to/spring-hex-cli.jar'
+```
+
+**Option B: Wrapper Script**
+
+```bash
+mkdir -p ~/.spring-hex
+mv spring-hex-cli.jar ~/.spring-hex/
+
+cat > ~/.spring-hex/spring-hex << 'EOF'
 #!/bin/bash
-exec java -jar /usr/local/bin/spring-hex-cli-1.0.0.jar "$@"
+exec java -jar "$HOME/.spring-hex/spring-hex-cli.jar" "$@"
 EOF
+chmod +x ~/.spring-hex/spring-hex
 
-# Make executable
-sudo chmod +x /usr/local/bin/spring-hex
+# Add to PATH (add this line to your ~/.bashrc or ~/.zshrc)
+export PATH="$HOME/.spring-hex:$PATH"
+```
+
+---
+
+## Build from Source
+
+```bash
+git clone https://github.com/Spring-hex/Spring-hex.github.io.git
+cd Spring-hex.github.io
+mvn clean package
+java -jar target/spring-hex-cli-1.0.0.jar --version
 ```
 
 ## Verification
-
-Verify the installation by checking the version:
 
 ```bash
 spring-hex --version
@@ -74,7 +95,12 @@ Expected output:
 Spring-Hex CLI v1.0.0
 ```
 
-If you see the version number, the installation is successful.
+## Uninstall
+
+```bash
+rm -rf ~/.spring-hex
+# Then remove the PATH line from your ~/.bashrc or ~/.zshrc
+```
 
 ## Next Steps
 

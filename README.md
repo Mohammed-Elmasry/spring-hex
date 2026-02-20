@@ -21,22 +21,14 @@ A command-line tool that generates [hexagonal architecture](https://alistair.coc
 
 ## Installation
 
-### Download the JAR
+### Quick Install (Recommended)
 
 ```bash
-curl -L -o spring-hex-cli-1.0.0.jar \
-  https://github.com/Spring-hex/Spring-hex.github.io/releases/download/v1.0.0/spring-hex-cli-1.0.0.jar
+curl -fsSL https://raw.githubusercontent.com/Spring-hex/Spring-hex.github.io/master/install.sh | bash
+source ~/.zshrc  # or ~/.bashrc
 ```
 
-### Set up an alias
-
-Add to your `~/.bashrc` or `~/.zshrc`:
-
-```bash
-alias spring-hex='java -jar /path/to/spring-hex-cli-1.0.0.jar'
-```
-
-### Build from source
+### Build from Source
 
 ```bash
 git clone https://github.com/Spring-hex/Spring-hex.github.io.git
@@ -44,6 +36,8 @@ cd Spring-hex.github.io
 mvn clean package
 java -jar target/spring-hex-cli-1.0.0.jar --version
 ```
+
+See the [installation guide](https://spring-hex.github.io/getting-started/installation) for manual install options and troubleshooting.
 
 ## Quick Start
 
